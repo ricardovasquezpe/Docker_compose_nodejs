@@ -1,0 +1,25 @@
+version: "2"
+services:
+  app:
+    container_name: nodejsapp
+    restart: always
+    build: ./api/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    env_file:
+      - ./api/.env
+  mongodb:
+    container_name: mongo
+    restart: always
+    build: 
+      context: "./db/"
+      dockerfile: Dockerfile
+      args:
+        admin_user: "ricardo"
+        admin_password: "456"
+    env_file:
+      - ./db/.env
+    ports:
+      - "27016:27017"
